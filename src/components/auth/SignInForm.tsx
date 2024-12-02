@@ -3,6 +3,8 @@ import { Eye, EyeOff } from 'lucide-react';
 import { validateEmail, validatePassword } from '../../utils/validation';
 import PasswordStrength from './PasswordStrength';
 import RoleSelector from './RoleSelector';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 export default function SignInForm() {
   const [email, setEmail] = useState('');
@@ -12,6 +14,8 @@ export default function SignInForm() {
   const [rememberDevice, setRememberDevice] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ email: '', password: '', role: '' });
+
+  const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +35,26 @@ export default function SignInForm() {
       return;
     }
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsLoading(false);
+    try {
+      const response = await axios.post('https://medical-backend-l140.onrender.com/api/login', {
+        email,
+        password,
+        role
+      });
+
+      if (response.data.role === 'doctor') {
+        window.location.href = 'https://docotr-dashboard.vercel.app/';
+      } else if (response.data.role === 'patient') {
+        window.location.href = 'https://patient-dashboard-pink.vercel.app/';
+      }
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setErrors(prev => ({ ...prev, password: error.response.data.error }));
+      } else {
+        setErrors(prev => ({ ...prev, password: 'An unexpected error occurred' }));
+      }
+      setIsLoading(false);
+    }
   };
 
   const getPlaceholder = () => {
