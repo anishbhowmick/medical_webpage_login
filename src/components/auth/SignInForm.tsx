@@ -4,7 +4,7 @@ import { validateEmail, validatePassword } from '../../utils/validation';
 import PasswordStrength from './PasswordStrength';
 import RoleSelector from './RoleSelector';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 export default function SignInForm() {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ export default function SignInForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ email: '', password: '', role: '' });
 
-  const history = useHistory();
+  // const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
