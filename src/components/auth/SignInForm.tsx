@@ -42,9 +42,15 @@ export default function SignInForm() {
         role
       });
 
-      if (response.data.role === 'doctor') {
-        window.location.href = 'https://docotr-dashboard.vercel.app/';
-      } else if (response.data.role === 'patient') {
+      const { role: userRole, user } = response.data;
+
+      if (userRole === 'doctor') {
+        // Store doctor data in localStorage
+        localStorage.setItem('doctor', JSON.stringify(user));
+        window.location.href = 'https://doctor-dashboard.vercel.app/';
+      } else if (userRole === 'patient') {
+        // Store patient data in localStorage or handle accordingly
+        localStorage.setItem('patient', JSON.stringify(user));
         window.location.href = 'https://patient-dashboard-pink.vercel.app/';
       }
     } catch (error: any) {
