@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Eye, EyeOff } from 'lucide-react';
-import { validateEmail, validatePassword } from '../../utils/validation';
 import PasswordStrength from './PasswordStrength';
 import RoleSelector from './RoleSelector';
-import axios from 'axios';
-// import { useHistory } from 'react-router-dom';
+import { validateEmail, validatePassword } from '../../utils/validation';
 
 export default function SignInForm() {
   const [email, setEmail] = useState('');
@@ -14,8 +13,6 @@ export default function SignInForm() {
   const [rememberDevice, setRememberDevice] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ email: '', password: '', role: '' });
-
-  // const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,14 +39,17 @@ export default function SignInForm() {
         role
       });
 
-      const { role: userRole, user } = response.data;
+      const { token, role: userRole, user } = response.data;
+
+      // Store JWT token
+      localStorage.setItem('token', token);
 
       if (userRole === 'doctor') {
-        // Store doctor data in localStorage
+        // Optionally store additional user data
         localStorage.setItem('doctor', JSON.stringify(user));
         window.location.href = 'https://doctor-dashboard.vercel.app/';
       } else if (userRole === 'patient') {
-        // Store patient data in localStorage or handle accordingly
+        // Optionally store additional user data
         localStorage.setItem('patient', JSON.stringify(user));
         window.location.href = 'https://patient-dashboard-pink.vercel.app/';
       }
