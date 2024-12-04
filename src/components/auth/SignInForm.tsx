@@ -46,11 +46,11 @@ export default function SignInForm() {
 
       if (userRole === 'doctor') {
         // Optionally store additional user data
-        // localStorage.setItem('doctor', JSON.stringify(user));
+        localStorage.setItem('doctor', JSON.stringify(user));
         window.location.href = 'https://docotr-dashboard.vercel.app/';
       } else if (userRole === 'patient') {
         // Optionally store additional user data
-        // localStorage.setItem('patient', JSON.stringify(user));
+        localStorage.setItem('patient', JSON.stringify(user));
         window.location.href = 'https://patient-dashboard-pink.vercel.app/';
       }
     } catch (error: any) {
