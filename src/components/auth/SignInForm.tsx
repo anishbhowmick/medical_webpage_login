@@ -39,7 +39,9 @@ export default function SignInForm() {
         role
       });
 
-      const { token, role: userRole, user } = response.data;
+      const { token, user } = response.data;
+
+      const userRole = user.role;
 
       // Store JWT token
       localStorage.setItem('token', token);
@@ -47,7 +49,7 @@ export default function SignInForm() {
       if (userRole === 'doctor') {
         // Optionally store additional user data
         localStorage.setItem('doctor', JSON.stringify(user));
-        window.location.href = 'https://docotr-dashboard.vercel.app/';
+        window.location.href = 'https://doctor-anish-dashboard.vercel.app/';
       } else if (userRole === 'patient') {
         // Optionally store additional user data
         localStorage.setItem('patient', JSON.stringify(user));
