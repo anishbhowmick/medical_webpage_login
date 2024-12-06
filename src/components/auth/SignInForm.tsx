@@ -43,17 +43,14 @@ export default function SignInForm() {
 
       const userRole = user.role;
 
-      // Store JWT token
+      // Store JWT token in localStorage
       localStorage.setItem('token', token);
 
+      // Redirect with token as URL parameter
       if (userRole === 'doctor') {
-        // Store doctor data
-        localStorage.setItem('doctor', JSON.stringify(user));
-        window.location.href = 'https://doctor-dashboard-orpin.vercel.app/';
+        window.location.href = `https://doctor-dashboard-orpin.vercel.app/?token=${token}`;
       } else if (userRole === 'patient') {
-        // Store patient data
-        localStorage.setItem('patient', JSON.stringify(user));
-        window.location.href = 'https://patient-dashboard-pink.vercel.app/';
+        window.location.href = `https://patient-dashboard-pink.vercel.app/?token=${token}`;
       }
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.error) {
