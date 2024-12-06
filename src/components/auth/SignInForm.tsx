@@ -47,11 +47,11 @@ export default function SignInForm() {
       localStorage.setItem('token', token);
 
       if (userRole === 'doctor') {
-        // Optionally store additional user data
+        // Store doctor data
         localStorage.setItem('doctor', JSON.stringify(user));
-        window.location.href = 'https://doctor-anish-dashboard.vercel.app/';
+        window.location.href = 'https://doctor-dashboard-orpin.vercel.app/';
       } else if (userRole === 'patient') {
-        // Optionally store additional user data
+        // Store patient data
         localStorage.setItem('patient', JSON.stringify(user));
         window.location.href = 'https://patient-dashboard-pink.vercel.app/';
       }
